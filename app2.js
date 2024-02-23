@@ -22,17 +22,16 @@ const gameBoard = (function() {
         ];
         let rowsToRemove = gameBoardEle.querySelectorAll(".rowContainer");
         rowsToRemove.forEach((row) => row.remove());
+
+
+
         board.forEach((row, rowIndex) => {
             let rowEle = document.createElement('div');
             rowEle.classList.add("rowContainer");
             row.forEach((piece, colIndex) => {
                 let pieceEle = document.createElement('div');
-                pieceEle.textContent = piece;
-                pieceEle.classList.add("pieceEle");
-                pieceEle.addEventListener('click', function() {
-                    updateVal(rowIndex, colIndex)
-                });
                 let updateVal = (row, col) => {
+                    console.log("update val", row, col)
                     if (playerTurn == 'Player1') {
                         console.log('player1.type', player1.type)
                         pieceEle.textContent = player1.type;
@@ -44,6 +43,7 @@ const gameBoard = (function() {
                         playerTurn = 'Player1';
                     }
                     let checkScore = (marker) => {
+
                         let three_in_column = (marker) => {
                             let row1 = board[0];
                             let row2 = board[1];
@@ -98,15 +98,24 @@ const gameBoard = (function() {
                             }
                             return false;
                         }
+
+
+
                     }
                     console.log("checking board ", board);
                     checkScore(board);
                 }
-                rowEle.appendChild(pieceEle);
-                gameBoardEle.appendChild(rowEle);
+
             })
 
+            pieceEle.textContent = piece;
+            pieceEle.classList.add("pieceEle");
+            pieceEle.addEventListener('click', function() {
+                updateVal(rowIndex, colIndex)
+            });
 
+            rowEle.appendChild(pieceEle);
+            gameBoardEle.appendChild(rowEle);
         })
     }
     let startGame = () => {
