@@ -1,3 +1,5 @@
+let movesMade = 0;
+
 function Gameboard() {
     let board = [
         ['0', '0', '0'],
@@ -54,6 +56,7 @@ function displayController() {
 
 let start = () => {
     let rows = gameBoardEle.querySelectorAll(".rowContainer");
+    movesMade = 0;
     rows.forEach((row => {
         let pieces = row.querySelectorAll("div");
         pieces.forEach((piece) => {
@@ -61,6 +64,15 @@ let start = () => {
             gameBoardEle.style.display = "block";
         })
     }))
+
+    for (let i = 0; i < 3; i++) {
+        let row = board[i];
+        for (let j = 0; j < 3; j++) {
+            let piece = row[j];
+            row[j] = '0';
+        }
+    }
+
 };
 let startBtn = document.createElement('button');
 let restartBtn = document.createElement('button');
@@ -75,30 +87,64 @@ document.body.appendChild(restartBtn);
 gameBoardEle.style.display = "none";
 
 function changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex) {
+    movesMade++;
     currentPlayer.addPoint();
+    let player1 = players[0];
+    let player2 = players[1];
     pieceEle.textContent = currentPlayer.marker;
     board[rowIndex][pieceIndex] = currentPlayer.marker;
     console.log("board ", board);
-    if (threeInRow(player, board)) {
-        console.log("three in row")
+    if (movesMade > 2) {
+        if (checkForTie()) {
+            console.log("It's a tie!")
+
+        } else if (threeInRow(currentPlayer, board)) {
+            console.log("Player " + currentPlayer.name + " wins!")
+
+        }
     }
+
 
 }
 
 function threeInRow(player, board) {
     const marker = player.marker;
-    let count = 0;
-    let result = false;
+
+
     for (let i = 0; i < 3; i++) {
         let row = board[i];
-        row.forEach(function(piece) {
-            if (piece === marker) {
+        if (row.every(piece => piece === marker)) {
+            return true;
+        }
+
+
+    }
+
+    return false;
+}
+
+
+
+function checkForTie() {
+    let count = 0;
+    for (let i = 0; i < 3; i++) {
+        let row = board[i];
+        for (let j = 0; j < 3; j++) {
+            let cell = row[j];
+            if (cell === 'X' || cell === 'O') {
                 count++;
             }
-        })
+        }
+
     }
-    return result;
+    if (count === 9) {
+        return true;
+    } else {
+        return false;
+    }
+
 }
+
 
 
 displayController()
