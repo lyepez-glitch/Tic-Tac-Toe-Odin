@@ -91,8 +91,11 @@ function changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex) {
     currentPlayer.addPoint();
     let player1 = players[0];
     let player2 = players[1];
-    pieceEle.textContent = currentPlayer.marker;
-    board[rowIndex][pieceIndex] = currentPlayer.marker;
+    if (pieceEle.textContent === '0') {
+        pieceEle.textContent = currentPlayer.marker;
+        board[rowIndex][pieceIndex] = currentPlayer.marker;
+    }
+
     console.log("board ", board);
     if (movesMade > 2) {
         if (checkForTie()) {
