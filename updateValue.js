@@ -19,7 +19,7 @@ const updateVal = (row, col, pieceEle, playerTurn, player1, player2, board) => {
 
 
 
-        if (three_in_column(marker, board, player) || three_in_row(marker, board, player) || diagonalScore(marker, board, player) || reverseDiagonal(marker, board, player)) {
+        if (three_in_row(marker, board, player)) {
             return true;
         } else {
             return false;

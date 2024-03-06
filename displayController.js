@@ -18,6 +18,8 @@ let displayController = function(board, gameBoardEle, playerTurn, player1, playe
             pieceEle.classList.add("pieceEle");
             pieceEle.addEventListener('click', function() {
                 playerTurn = updateVal(rowIndex, colIndex, pieceEle, playerTurn, player1, player2, board)
+                console.log("res", playerTurn)
+
 
             });
 

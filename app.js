@@ -14,6 +14,9 @@ const gameBoard = (function() {
     let playerTurn = 'Player1';
     let player1 = player("1", "X");
     let player2 = player("2", "O");
+
+    console.log("player1 ", player1)
+    console.log("player2 ", player2)
     let restartBtn = document.createElement('button');
     startBtn.addEventListener("click", function() { startGame(board, playerTurn, player1, player2) });
     restartBtn.addEventListener("click", function() { restartGame(board, playerTurn, player1, player2) });
