@@ -1,17 +1,43 @@
 let movesMade = 0;
-
-function Gameboard() {
+const Gameboard = (function() {
     let board = [
         ['0', '0', '0'],
         ['0', '0', '0'],
         ['0', '0', '0']
     ];
+    const displayController = function() {
+        // const board = Gameboard().board;
+
+        board.forEach((row, rowIndex) => {
+            let rowEle = document.createElement('div');
+            rowEle.classList.add("rowContainer");
+            row.forEach((piece, pieceIndex) => {
+                let pieceEle = document.createElement('div');
+                pieceEle.textContent = piece;
+                pieceEle.classList.add("pieceEle");
+                pieceEle.addEventListener('click', function() {
+                    console.log("update piece")
+                    changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex);
+                    if (currentPlayer === players[0]) {
+                        currentPlayer = players[1];
+
+                    } else if (currentPlayer === players[1]) {
+                        currentPlayer = players[0];
+                    }
+                });
+                rowEle.appendChild(pieceEle);
+
+            })
+            gameBoardEle.appendChild(rowEle);
+        })
+    }
+
+    return { board, displayController }
+})();
 
 
+const board = Gameboard.board;
 
-    return { board }
-}
-const board = Gameboard().board;
 
 function player(label, type) {
     let score = 0;
@@ -26,32 +52,34 @@ const players = [
 ]
 let currentPlayer = players[0];
 
-function displayController() {
-    // const board = Gameboard().board;
+// const displayController = (function() {
+//     // const board = Gameboard().board;
 
-    board.forEach((row, rowIndex) => {
-        let rowEle = document.createElement('div');
-        rowEle.classList.add("rowContainer");
-        row.forEach((piece, pieceIndex) => {
-            let pieceEle = document.createElement('div');
-            pieceEle.textContent = piece;
-            pieceEle.classList.add("pieceEle");
-            pieceEle.addEventListener('click', function() {
-                console.log("update piece")
-                changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex);
-                if (currentPlayer === players[0]) {
-                    currentPlayer = players[1];
+//     board.forEach((row, rowIndex) => {
+//         let rowEle = document.createElement('div');
+//         rowEle.classList.add("rowContainer");
+//         row.forEach((piece, pieceIndex) => {
+//             let pieceEle = document.createElement('div');
+//             pieceEle.textContent = piece;
+//             pieceEle.classList.add("pieceEle");
+//             pieceEle.addEventListener('click', function() {
+//                 console.log("update piece")
+//                 changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex);
+//                 if (currentPlayer === players[0]) {
+//                     currentPlayer = players[1];
 
-                } else if (currentPlayer === players[1]) {
-                    currentPlayer = players[0];
-                }
-            });
-            rowEle.appendChild(pieceEle);
+//                 } else if (currentPlayer === players[1]) {
+//                     currentPlayer = players[0];
+//                 }
+//             });
+//             rowEle.appendChild(pieceEle);
 
-        })
-        gameBoardEle.appendChild(rowEle);
-    })
-}
+//         })
+//         gameBoardEle.appendChild(rowEle);
+//     })
+// })();
+
+
 
 
 let start = () => {
@@ -150,4 +178,4 @@ function checkForTie() {
 
 
 
-displayController()
+const displayController = Gameboard.displayController();
