@@ -84,6 +84,8 @@ let currentPlayer = players[0];
 
 let start = () => {
     let rows = gameBoardEle.querySelectorAll(".rowContainer");
+    let displayWinner = document.querySelector('#displayWinner');
+    displayWinner.textContent = "";
     movesMade = 0;
     rows.forEach((row => {
         let pieces = row.querySelectorAll("div");
@@ -131,6 +133,10 @@ function changeValue(pieceEle, currentPlayer, rowIndex, pieceIndex) {
 
         } else if (threeInRow(currentPlayer, board)) {
             console.log("Player " + currentPlayer.name + " wins!")
+            let displayWinner = document.querySelector('#displayWinner');
+            let winId = '#player' + currentPlayer.name;
+            let winner = document.querySelector(winId).value;
+            displayWinner.textContent = "Player " + winner + " wins!"
 
         }
     }
